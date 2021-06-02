@@ -1,19 +1,22 @@
 import React,{useState} from 'react'
+import { connect } from 'react-redux'
+import { createProject } from '../../store/actions/projectActions'
 
-const CreateProject=()=> {
+const CreateProject=(props)=> {
 
-    let [userData,setUserData]=useState({
+    let [projectData,setProjectData]=useState({
         title:'',
         content:''
     })
 
     const handleSubmit=(e)=>{
         e.preventDefault();
-        console.log(userData);
+        // console.log(projectData);
+        props.createProject(projectData)
         
     }
     const handleChange=(e)=>{
-        setUserData((preValue)=>{
+        setProjectData((preValue)=>{
             return {
                 ...preValue,
                 [e.target.id]:e.target.value
@@ -42,4 +45,10 @@ const CreateProject=()=> {
     )
 }
 
-export default CreateProject
+const mapDispatchToProps = dispatch => {
+    return {
+      createProject: (project) => dispatch(createProject(project))
+    }
+}
+
+export default connect(null,mapDispatchToProps)(CreateProject)
